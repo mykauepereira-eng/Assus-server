@@ -5,7 +5,7 @@
 .atd2 .card{margin:0;min-width:0}
 @media(min-width:900px){.atd2{grid-template-columns:minmax(260px,340px) 1fr}.atdv{display:none}}
 @media(max-width:899px){.atd2.sel .atdl{display:none}.atd2:not(.sel) .atdf{display:none}}
-.atdfl{margin-bottom:10px}.atdfl button{font-size:13px;padding:6px 11px}
+.atdfl{margin-bottom:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.atdfl::-webkit-scrollbar{display:none}.atdfl button{flex:none;font-size:13px;padding:6px 11px}
 .atdis{display:grid;gap:6px;max-height:68vh;overflow:auto;margin:0 -4px;padding:0 4px}
 .atdi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--bd);background:var(--sfs);color:var(--fg);font:inherit;padding:10px;border-radius:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
 .atdi:hover{border-color:color-mix(in srgb,var(--ac) 45%,var(--bd))}
@@ -13,16 +13,20 @@
 .atdin{flex:1;min-width:0;display:grid;gap:2px}
 .atdin b,.atdin small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .atdin small{color:var(--mut);font-size:12.5px}
-.atdim{display:grid;justify-items:end;gap:4px;flex:none}
-.atdim em{font-style:normal;color:var(--mut);font-size:12px}
-.atdim .badge{font-size:11px;padding:2px 8px}
+.atdt{display:flex;gap:8px;align-items:baseline;min-width:0}
+.atdt b{flex:1;min-width:0}
+.atdt em{font-style:normal;color:var(--mut);font-size:12px;flex:none}
+.atdtg{display:flex;gap:6px;align-items:center;margin-top:3px}
+.atdtg .badge{font-size:11px;padding:2px 8px}
+.atdx svg,.atdf .alert svg,.tgi svg,.atdk svg{width:16px;height:16px;vertical-align:-3px;flex:none}
 .atdc{font-style:normal;flex:none;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#94a3b8,#64748b)}
 .atdc svg{width:18px;height:18px}
 .atdc.whatsapp{background:linear-gradient(135deg,#25d366,#128c7e)}
 .atdc.instagram{background:linear-gradient(45deg,#f9a825,#e1306c 55%,#833ab4)}
 .atdc.messenger{background:linear-gradient(135deg,#00b2ff,#006aff)}
 .atdc.teste{background:linear-gradient(135deg,#12d6a0,#0aa7c9)}
-.atdh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.atdh{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.atdh .badge{margin-left:auto}
 .atdhn{flex:1;min-width:0;display:grid}
 .atdhn small{color:var(--mut);font-size:13px}
 .atdv{font-size:22px;line-height:1;padding:2px 8px}

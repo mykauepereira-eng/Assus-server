@@ -29,6 +29,7 @@ const MODELO = () => Deno.env.get('ATD_MODELO') || A.MODELO;
 const dorme = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const daqui = (h: number) => new Date(Date.now() + h * 3600e3).toISOString();
 const agoraISO = () => new Date().toISOString();
+const canalN = (c: string) => (A.CANAIS as Record<string, string>)[c] ?? c;
 const msgErro = (e: unknown) => (e instanceof Error ? e.message : String(e ?? 'erro')).slice(0, 300);
 function segundoPlano(p: Promise<unknown>) {
   const w = p.catch((e) => console.error('atendente:', msgErro(e)));
@@ -67,7 +68,7 @@ async function pensar(ctx: Ctx, msgs: Array<{ autor: string; texto: string }>) {
       { type: 'text', text: A.sistema(ctx.c, ctx.loja.empresa) },
       { type: 'text', text: 'BASE\n' + A.baseTexto(ctx.loja, ctx.carros, ctx.c), cache_control: { type: 'ephemeral' } },
     ],
-    messages: hist,
+    messages: hist as Anthropic.MessageParam[],
     output_config: { effort: 'low', format: { type: 'json_schema', schema: A.ESQUEMA } },
   });
   const uso = { entrada: r.usage.input_tokens ?? 0, saida: r.usage.output_tokens ?? 0, cache: r.usage.cache_read_input_tokens ?? 0 };
@@ -276,7 +277,7 @@ async function equipe(req: Request, b: Record<string, any>) {
 
   const { data: cv } = await admin.from('atd_conversas').select('*').eq('id', String(b.conversa ?? '')).maybeSingle();
   if (!cv) return json({ error: 'Conversa não encontrada.' }, 404);
-  const quem = cv.nome || A.CANAIS[cv.canal] || 'contato';
+  const quem = cv.nome || canalN(cv.canal) || 'contato';
   const ctx = await contexto();
 
   if (acao === 'enviar') {
@@ -291,17 +292,17 @@ async function equipe(req: Request, b: Record<string, any>) {
   }
   if (acao === 'assumir') {
     await admin.from('atd_conversas').update({ estado: 'humano', pausado_ate: daqui(ctx.c.pausaH), nao_lidas: 0 }).eq('id', cv.id);
-    await registrar(`Assumiu a conversa de ${quem} (${A.CANAIS[cv.canal]}); o robô fica calado por ${ctx.c.pausaH} h`, eu, cv.lead_id);
+    await registrar(`Assumiu a conversa de ${quem} (${canalN(cv.canal)}); o robô fica calado por ${ctx.c.pausaH} h`, eu, cv.lead_id);
     return json({ ok: true });
   }
   if (acao === 'devolver') {
     await admin.from('atd_conversas').update({ estado: 'robo', pausado_ate: null, motivo: '' }).eq('id', cv.id);
-    await registrar(`Devolveu ao robô a conversa de ${quem} (${A.CANAIS[cv.canal]})`, eu, cv.lead_id);
+    await registrar(`Devolveu ao robô a conversa de ${quem} (${canalN(cv.canal)})`, eu, cv.lead_id);
     return json({ ok: true });
   }
   if (acao === 'encerrar') {
     await admin.from('atd_conversas').update({ estado: 'encerrado', pausado_ate: null, nao_lidas: 0 }).eq('id', cv.id);
-    await registrar(`Encerrou a conversa de ${quem} (${A.CANAIS[cv.canal]})`, eu, cv.lead_id);
+    await registrar(`Encerrou a conversa de ${quem} (${canalN(cv.canal)})`, eu, cv.lead_id);
     return json({ ok: true });
   }
   if (acao === 'lida') {
@@ -311,7 +312,7 @@ async function equipe(req: Request, b: Record<string, any>) {
   if (acao === 'apagar') {
     if (!eu.admin) return json({ error: 'Só o administrador apaga conversas (pedido de exclusão de dados).' }, 403);
     await admin.from('atd_conversas').delete().eq('id', cv.id);
-    await registrar(`Apagou a conversa de ${quem} (${A.CANAIS[cv.canal]}) a pedido do cliente (LGPD)`, eu, cv.lead_id);
+    await registrar(`Apagou a conversa de ${quem} (${canalN(cv.canal)}) a pedido do cliente (LGPD)`, eu, cv.lead_id);
     return json({ ok: true });
   }
   return json({ error: 'Ação desconhecida.' }, 400);

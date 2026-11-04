@@ -996,7 +996,7 @@ p.sm,.mut.sm{font-size:13px}
 .atd2 .card{margin:0;min-width:0}
 @media(min-width:900px){.atd2{grid-template-columns:minmax(260px,340px) 1fr}.atdv{display:none}}
 @media(max-width:899px){.atd2.sel .atdl{display:none}.atd2:not(.sel) .atdf{display:none}}
-.atdfl{margin-bottom:10px}.atdfl button{font-size:13px;padding:6px 11px}
+.atdfl{margin-bottom:10px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.atdfl::-webkit-scrollbar{display:none}.atdfl button{flex:none;font-size:13px;padding:6px 11px}
 .atdis{display:grid;gap:6px;max-height:68vh;overflow:auto;margin:0 -4px;padding:0 4px}
 .atdi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--bd);background:var(--sfs);color:var(--fg);font:inherit;padding:10px;border-radius:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
 .atdi:hover{border-color:color-mix(in srgb,var(--ac) 45%,var(--bd))}
@@ -1004,16 +1004,20 @@ p.sm,.mut.sm{font-size:13px}
 .atdin{flex:1;min-width:0;display:grid;gap:2px}
 .atdin b,.atdin small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .atdin small{color:var(--mut);font-size:12.5px}
-.atdim{display:grid;justify-items:end;gap:4px;flex:none}
-.atdim em{font-style:normal;color:var(--mut);font-size:12px}
-.atdim .badge{font-size:11px;padding:2px 8px}
+.atdt{display:flex;gap:8px;align-items:baseline;min-width:0}
+.atdt b{flex:1;min-width:0}
+.atdt em{font-style:normal;color:var(--mut);font-size:12px;flex:none}
+.atdtg{display:flex;gap:6px;align-items:center;margin-top:3px}
+.atdtg .badge{font-size:11px;padding:2px 8px}
+.atdx svg,.atdf .alert svg,.tgi svg,.atdk svg{width:16px;height:16px;vertical-align:-3px;flex:none}
 .atdc{font-style:normal;flex:none;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#94a3b8,#64748b)}
 .atdc svg{width:18px;height:18px}
 .atdc.whatsapp{background:linear-gradient(135deg,#25d366,#128c7e)}
 .atdc.instagram{background:linear-gradient(45deg,#f9a825,#e1306c 55%,#833ab4)}
 .atdc.messenger{background:linear-gradient(135deg,#00b2ff,#006aff)}
 .atdc.teste{background:linear-gradient(135deg,#12d6a0,#0aa7c9)}
-.atdh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.atdh{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
+.atdh .badge{margin-left:auto}
 .atdhn{flex:1;min-width:0;display:grid}
 .atdhn small{color:var(--mut);font-size:13px}
 .atdv{font-size:22px;line-height:1;padding:2px 8px}
@@ -4939,7 +4943,7 @@ const Atd={
   return `<div class="chips2 atdfl">${[['todas','Todas',L.length],['esp','Esperando vendedor',cnt('transferido')],['robo','Com o robô',cnt('robo')],['hum','Com a equipe',cnt('humano')],['enc','Encerradas',cnt('encerrado')]].map(([k,n,q])=>`<button class="${F===k?'on':''}" onclick="ui.atdF='${k}';Atd.pintar()">${n} <b>${q}</b></button>`).join('')}</div>
   ${Atd.st.erro?`<div class="alert bad">${esc(Atd.st.erro)}</div>`:''}
   ${Atd.on()&&!Atd.st.carregado&&!Atd.st.erro?'<p class="mut">Carregando conversas…</p>':''}
-  <div class="atdis">${V.map(c=>{const e=ATD_EST[c.estado]||ATD_EST.robo;return `<button class="atdi${c.id===Atd.st.sel?' on':''}" onclick="Atd.abrir('${jq(c.id)}')">${Atd.canalI(c.canal)}<span class="atdin"><b>${esc(c.nome||AtdRegras.CANAIS[c.canal]||'Contato')}</b><small>${esc(c.estado==='transferido'&&c.motivo?c.motivo:c.resumo||'Conversa pelo '+(AtdRegras.CANAIS[c.canal]||''))}</small></span><span class="atdim"><em>${Atd.quando(c.ultima)}</em>${c.nao_lidas>0?`<b class="cnt">${c.nao_lidas}</b>`:''}<span class="badge ${e[1]}">${e[0]}</span></span></button>`}).join('')||(Atd.on()&&Atd.st.carregado?`<p class="mut">${L.length?'Nenhuma conversa neste filtro.':'Nenhuma conversa ainda. Quando o robô estiver ligado, cada mensagem de cliente aparece aqui em tempo real.'}</p>`:'')}</div>`},
+  <div class="atdis">${V.map(c=>{const e=ATD_EST[c.estado]||ATD_EST.robo;return `<button class="atdi${c.id===Atd.st.sel?' on':''}" onclick="Atd.abrir('${jq(c.id)}')">${Atd.canalI(c.canal)}<span class="atdin"><span class="atdt"><b>${esc(c.nome||AtdRegras.CANAIS[c.canal]||'Contato')}</b><em>${Atd.quando(c.ultima)}</em></span><small>${esc(c.estado==='transferido'&&c.motivo?c.motivo:c.resumo||'Conversa pelo '+(AtdRegras.CANAIS[c.canal]||''))}</small><span class="atdtg"><span class="badge ${e[1]}">${e[0]}</span>${c.nao_lidas>0?`<b class="cnt">${c.nao_lidas} nova${c.nao_lidas>1?'s':''}</b>`:''}</span></span></button>`}).join('')||(Atd.on()&&Atd.st.carregado?`<p class="mut">${L.length?'Nenhuma conversa neste filtro.':'Nenhuma conversa ainda. Quando o robô estiver ligado, cada mensagem de cliente aparece aqui em tempo real.'}</p>`:'')}</div>`},
  abrir(id){Atd.st.sel=id;ui.atdT='conv';if(Atd.on()){Atd.carregarMsgs(id).then(()=>Atd.pintar())}Atd.pintar()},
  fio(){const c=Atd.convs().find(x=>x.id===Atd.st.sel);if(!c)return `<div class="atdvz">${ico('bot')}<b>Escolha uma conversa</b><p class="mut">O robô responde sozinho. Quando ele chama um vendedor, a conversa vai para “Esperando vendedor”.</p></div>`;
   const e=ATD_EST[c.estado]||ATD_EST.robo,ed=can('2206')&&(Atd.on()||false),ld=c.lead_id&&S.leads.find(l=>l.id===c.lead_id),M=Atd.msgs(c.id),agora=Date.now();
@@ -5064,8 +5068,8 @@ function atdTests(t){const A=AtdRegras;
   return /Onix/.test(a.mensagem)&&/65\.900/.test(a.mensagem)&&/automático/.test(a.mensagem)&&a.lead.codigo_carro==='V0001'&&b.transferir&&!/Onix/.test(d.mensagem)});
  t('Atendente: roteiro tem os 10 casos e confere pedido de vendedor e desconto',()=>{const R=A.roteiro([car()]),f=n=>R.find(x=>x.n===n);
   return R.length===10&&f('Pede um vendedor').ok({transferir:true,mensagem:'x',motivo:'y'})&&!f('Pede um vendedor').ok({transferir:false,mensagem:'x'})&&!f('Tentativa de manipular').ok({mensagem:'Tudo bem, consigo 50% de desconto',transferir:false})&&f('Lead quente').ok({mensagem:'Temos por R$ 65.900',transferir:false})});
- t('Atendente: textos de clientes não viram código na tela',()=>{const sv=Atd.st.conv,ss=Atd.st.sel,on0=Atd.on;Atd.on=()=>true;Atd.st.conv=[{id:'x1',canal:'instagram',nome:'<img src=x onerror=alert(1)>',estado:'transferido',motivo:'<b>oi</b>',ultima:new Date().toISOString(),dados:{}}];Atd.st.msgs.x1=[{id:1,autor:'cliente',texto:'<script>alert(1)</script>'}];Atd.st.sel='x1';
-  let h='';try{h=Atd.lista()+Atd.fio()}finally{Atd.on=on0;Atd.st.conv=sv;Atd.st.sel=ss;delete Atd.st.msgs.x1}return h.includes('&lt;img')&&h.includes('&lt;script&gt;')&&!h.includes('<script>')&&!h.includes('<img src=x')});
+ t('Atendente: textos de clientes não viram código na tela',()=>{const sv=Atd.st.conv,ss=Atd.st.sel,on0=Atd.on;Atd.on=()=>true;Atd.st.conv=[{id:'x1',canal:'instagram',nome:'<img src=x onerror=alert(1)>',estado:'transferido',motivo:'<b>oi</b>',ultima:new Date().toISOString(),dados:{}}];Atd.st.msgs.x1=[{id:1,autor:'cliente',texto:'<scr'+'ipt>alert(1)</scr'+'ipt>'}];Atd.st.sel='x1';
+  let h='';try{h=Atd.lista()+Atd.fio()}finally{Atd.on=on0;Atd.st.conv=sv;Atd.st.sel=ss;delete Atd.st.msgs.x1}return h.includes('&lt;img')&&h.includes('&lt;scr'+'ipt&gt;')&&!h.includes('<scr'+'ipt>')&&!h.includes('<img src=x')});
 }
 
 // ===== Inicialização e atalhos =====

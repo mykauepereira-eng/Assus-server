@@ -70,6 +70,11 @@ m.R('</style>\n<svg width="0"', ler(AQUI, 'atd.css').rstrip() + '\n</style>\n<sv
 m.R('// ===== Inicialização e atalhos =====',
     ler(AQUI, 'atd_regras.js').rstrip() + '\n' + ler(AQUI, 'atd_ui.js').rstrip() + '\n\n// ===== Inicialização e atalhos =====')
 
+# o código entra num <script> da página: "</script" ou "<!--" dentro dele quebrariam a página inteira
+for nome in ('atd_regras.js', 'atd_ui.js'):
+    js = ler(AQUI, nome).lower()
+    if '</script' in js or '<!--' in js:
+        raise SystemExit(f'ERRO: {nome} tem "</script" ou "<!--" (quebra a página). Monte o texto em pedaços.')
 conteudo = m.s
 cab, corpo = conteudo.split('\n<svg width="0"', 1)
 corpo = '<svg width="0"' + corpo
