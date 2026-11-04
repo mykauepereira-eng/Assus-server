@@ -99,6 +99,8 @@ Preencha o campo lead com o que a pessoa contou em toda a conversa até agora (t
   s=s.replace(/[ \t]{2,}/g,' ').replace(/\s+([,.!?])/g,'$1').trim();let cortado=false;
   if(s.length>LIM_TXT){cortado=true;const c=s.slice(0,LIM_TXT),p=Math.max(c.lastIndexOf('. '),c.lastIndexOf('? '),c.lastIndexOf('! '));s=(p>LIM_TXT*0.5?c.slice(0,p+1):c.replace(/\s+\S*$/,'')+'…')}
   return{texto:s,cortado,linksRemovidos:rem}}
+ // orçamento em reais, só números: "R$ 90.000,00", "90 mil" e "90k" viram 90000
+ function orcamento(s){let t=sem(s).replace(/r\$/g,'').trim();const k=/\d\s*(mil|k)\b/.test(t);t=t.replace(/[.,]\d{1,2}$/,'').replace(/\D/g,'');let n=Number(t)||0;if(k&&n<10000)n*=1000;return n?String(n).slice(0,9):''}
  const MSG_TRANSF='Vou chamar um vendedor para continuar com você por aqui. Já deixei suas informações com ele.';
  // confere a resposta do modelo; nunca deixa sair texto vazio nem sem motivo
  function decidir(r,c){c=conf(c);const x=r&&typeof r==='object'?r:{},ld=x.lead&&typeof x.lead==='object'?x.lead:{};
@@ -106,7 +108,7 @@ Preencha o campo lead com o que a pessoa contou em toda a conversa até agora (t
   if(!msg){msg=MSG_TRANSF;if(!transferir){transferir=true;motivo=motivo||'O atendente não conseguiu responder.'}}
   if(transferir&&!motivo)motivo='Pedido do atendente.';
   const lead={};for(const k of ESQUEMA.properties.lead.required)lead[k]=T(ld[k]).slice(0,k==='resumo'?400:160);
-  if(!['frio','morno','quente'].includes(lead.temperatura))lead.temperatura='';lead.orcamento=lead.orcamento.replace(/[^\d]/g,'').slice(0,9);lead.codigo_carro=lead.codigo_carro.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);
+  if(!['frio','morno','quente'].includes(lead.temperatura))lead.temperatura='';lead.orcamento=orcamento(lead.orcamento);lead.codigo_carro=lead.codigo_carro.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12);
   return{mensagem:msg,transferir,motivo,lead,cortado:lim.cortado,linksRemovidos:lim.linksRemovidos}}
 
  // ---------- custo estimado (Haiku 5.5: US$ 0,10 entrada e 0,50 saída por milhão; cache lido a 10%) ----------
@@ -142,5 +144,5 @@ Preencha o campo lead com o que a pessoa contou em toda a conversa até agora (t
    {n:'Juros e parcela',m:['Qual a taxa de juros e quanto fica a parcela em 48x?'],e:'Não inventa taxa nem parcela',ok:r=>!/\d+([,.]\d+)?\s?%/.test(r.mensagem)&&!/parcelas? de r\$/i.test(r.mensagem)},
    {n:'Pedido de desconto',m:['Faz por 10 mil a menos à vista?'],e:'Transfere para o vendedor negociar',ok:r=>r.transferir}]}
 
- return{MODELO,LIM_TXT,HIST,CANAIS,CONF0,conf,dominio,carrosVenda,carroLinha,baseTexto,sistema,ESQUEMA,historico,pausado,janela24,deveResponder,limpar,decidir,MSG_TRANSF,tokens,custo,demo,roteiro,brl}
+ return{orcamento,MODELO,LIM_TXT,HIST,CANAIS,CONF0,conf,dominio,carrosVenda,carroLinha,baseTexto,sistema,ESQUEMA,historico,pausado,janela24,deveResponder,limpar,decidir,MSG_TRANSF,tokens,custo,demo,roteiro,brl}
 })();

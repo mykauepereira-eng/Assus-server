@@ -1,0 +1,59 @@
+
+/* ===== Atendente IA (2206) ===== */
+.atdx{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 12px;font-size:14px}
+.atd2{display:grid;gap:12px;align-items:start}
+.atd2 .card{margin:0;min-width:0}
+@media(min-width:900px){.atd2{grid-template-columns:minmax(260px,340px) 1fr}.atdv{display:none}}
+@media(max-width:899px){.atd2.sel .atdl{display:none}.atd2:not(.sel) .atdf{display:none}}
+.atdfl{margin-bottom:10px}.atdfl button{font-size:13px;padding:6px 11px}
+.atdis{display:grid;gap:6px;max-height:68vh;overflow:auto;margin:0 -4px;padding:0 4px}
+.atdi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--bd);background:var(--sfs);color:var(--fg);font:inherit;padding:10px;border-radius:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.atdi:hover{border-color:color-mix(in srgb,var(--ac) 45%,var(--bd))}
+.atdi.on{border-color:var(--ac);box-shadow:0 0 0 3px var(--acs)}
+.atdin{flex:1;min-width:0;display:grid;gap:2px}
+.atdin b,.atdin small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.atdin small{color:var(--mut);font-size:12.5px}
+.atdim{display:grid;justify-items:end;gap:4px;flex:none}
+.atdim em{font-style:normal;color:var(--mut);font-size:12px}
+.atdim .badge{font-size:11px;padding:2px 8px}
+.atdc{font-style:normal;flex:none;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#94a3b8,#64748b)}
+.atdc svg{width:18px;height:18px}
+.atdc.whatsapp{background:linear-gradient(135deg,#25d366,#128c7e)}
+.atdc.instagram{background:linear-gradient(45deg,#f9a825,#e1306c 55%,#833ab4)}
+.atdc.messenger{background:linear-gradient(135deg,#00b2ff,#006aff)}
+.atdc.teste{background:linear-gradient(135deg,#12d6a0,#0aa7c9)}
+.atdh{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.atdhn{flex:1;min-width:0;display:grid}
+.atdhn small{color:var(--mut);font-size:13px}
+.atdv{font-size:22px;line-height:1;padding:2px 8px}
+.atdvz{display:grid;justify-items:center;text-align:center;gap:6px;padding:40px 10px;color:var(--mut)}
+.atdvz svg{width:40px;height:40px;opacity:.6}
+.atdvz b{color:var(--fg)}
+.atdm{display:flex;flex-direction:column;gap:8px;max-height:56vh;min-height:180px;overflow:auto;padding:10px;margin:8px 0;border-radius:16px;background:color-mix(in srgb,var(--fg) 4%,transparent)}
+.atdm.sim{max-height:46vh}
+.bb{max-width:min(82%,560px);display:grid;gap:3px}
+.bb span{padding:9px 12px;border-radius:16px;font-size:14.5px;line-height:1.45;overflow-wrap:anywhere}
+.bb small{font-size:11.5px;color:var(--mut);padding:0 6px}
+.bb.cli{align-self:flex-start}
+.bb.cli span{background:var(--sfs);border:1px solid var(--bd);border-bottom-left-radius:5px}
+.bb.rob,.bb.hum{align-self:flex-end;justify-items:end}
+.bb.rob span{background:var(--acs);border:1px solid color-mix(in srgb,var(--ac) 30%,transparent);border-bottom-right-radius:5px}
+.bb.hum span{background:color-mix(in srgb,var(--s1) 14%,var(--sfs));border:1px solid color-mix(in srgb,var(--s1) 35%,transparent);border-bottom-right-radius:5px}
+.bb.sis{align-self:center;max-width:90%;font-size:12.5px;color:var(--warn);text-align:center;padding:6px 10px;border-radius:10px;background:color-mix(in srgb,var(--warn) 10%,transparent)}
+.bb small.atdd{display:block;max-width:100%;text-align:left;line-height:1.4;background:color-mix(in srgb,var(--fg) 5%,transparent);border-radius:10px;padding:6px 8px}
+.atdp{margin:0 0 8px}
+.atdk{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.atdw{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.atdw textarea{flex:1 1 220px;min-height:46px;margin:0;font:inherit;font-size:15px;resize:vertical}
+.atdw button{flex:none}
+.atdw p{flex:1 1 100%;margin:0}
+pre.atdb{white-space:pre-wrap;font:12.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:color-mix(in srgb,var(--fg) 5%,transparent);border-radius:12px;padding:10px;max-height:340px;overflow:auto;margin:8px 0 0}
+.atdrt{border-top:1px solid var(--bd);padding:6px 0;margin:0}
+.atdrt summary{color:var(--fg);font-weight:600}
+.atdrt summary span{display:inline-block;width:18px;font-weight:800}
+.atdrt p{margin:4px 0;font-size:14px}
+.atdlg{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--bd)}
+.atdlg:first-of-type{border-top:0}
+.atdlg>i{font-style:normal;flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;border:2px solid currentColor}
+.atdlg p{margin:2px 0 0}
+.hc .bb span,.hc .atdi{border:2px solid #111}
