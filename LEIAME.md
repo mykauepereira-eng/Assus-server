@@ -55,7 +55,7 @@ fonte/
   testes/rodar_testes.js   testa no navegador: node fonte/testes/rodar_testes.js
   index.html, demo/, deploy/   gerados pelo build
 supabase/
-  migrations/001…008       banco (001 a 007 já estavam no ar; 008 é o atendente)
+  migrations/001…008       banco (todas no ar; a 008, do atendente, aplicada em 05/11/2026)
   functions/               admin-users, leads, vitrine, integracoes, renave e atendente
   checkup_atendente.sql    checkup do atendente (rode depois do checkup.sql de sempre)
 historico/                 o Sistema de Gestão original deste repositório
@@ -63,9 +63,9 @@ historico/                 o Sistema de Gestão original deste repositório
 
 ## Como publicar a versão 7.0
 
-1. **Banco**: aplicar `supabase/migrations/008_atendente.sql` (só cria coisas novas; não mexe em dados).
-2. **Função**: publicar `supabase/functions/atendente` (arquivos `index.ts`, `nucleo.ts`, `regras.js`, `_compartilhado.ts`)
-   com verificação de JWT desligada (a função confere quem chama por dentro, como as outras).
+1. ~~**Banco**: aplicar `supabase/migrations/008_atendente.sql`~~ feito em 05/11/2026 (só criou coisas novas; não mexeu em dados).
+2. ~~**Função**: publicar `supabase/functions/atendente`~~ feito em 05/11/2026 (versão 1, verificação de JWT desligada como as outras).
+   Testada no servidor: diagnóstico, verificação da Meta, recusa sem assinatura e sem login, e mensagem repetida entra uma vez só.
 3. **Site**: no Netlify, aba Deploys, arrastar a pasta `site`. O endereço continua o mesmo.
 4. Entrar no sistema e abrir **2206 → Como ligar**. Seguir os passos (chave da Claude primeiro).
 5. **2206 → Testar**: rodar o roteiro dos 10 testes até acertar todos.
